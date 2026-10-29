@@ -67,7 +67,7 @@ export default async (req) => {
     if (!okId(b.idea_id)) return bad("Unknown idea.", 404);
     const idea = await getJ("idea:" + b.idea_id);
     if (!idea) return bad("Unknown idea.", 404);
-    if (idea.submitter_id === me.id) return bad("You can’t vote on your own idea.", 403);   // the rule
+    if (idea.submitter_id === me.id) return bad("You can’t vote on your own idea.", 403);
     const type = b.type === -1 ? -1 : 1, key = `vote:${idea.id}:${me.id}`;
     const ex = await getJ(key);
     if (ex && ex.vote_type === type) await store.delete(key);
