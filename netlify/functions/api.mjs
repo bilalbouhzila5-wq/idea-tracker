@@ -52,22 +52,7 @@ export default async (req) => {
     const [users, ideas, votes, comments] = await Promise.all([list("user:"), list("idea:"), list("vote:"), list("comment:")]);
     return json({ session: me?.id || null, users: users.map(pub), ideas, votes, comments });
   }
-  if (path === "rescue") {
-    const q = new URL(req.url).searchParams, secret = process.env.ADMIN_RESCUE_KEY;
-    if (!secret || q.get("key") !== secret) return bad("Not allowed.", 403);
-    const email = clean(q.get("email"), 120).toLowerCase();
-    const id = await store.get("email:" + email);
-    const u = id ? await getJ("user:" + id) : null;
-    if (!u) return bad("No such user.", 404);
-    if (q.get("action") === "delete") {
-      await store.delete("user:" + u.id);
-      await store.delete("email:" + email);
-      return json({ ok: true, deleted: email });
-    }
-    u.role = "admin";
-    await store.setJSON("user:" + u.id, u);
-    return json({ ok: true, admin: email });
-  }
+
   if (!me) return bad("Please log in.", 401);
 
   if (path === "idea") {
