@@ -7,57 +7,112 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#14302f;--paper:#f5f6f2;--card:#fff;--line:#d9ded7;--amber:#f0a81c;--teal:#1b6b66;--mute:#5d6f6c;--bad:#b3392f;--r:10px}
+:root{--ink:#0f2a2a;--ink2:#17403f;--paper:#f3f5f1;--card:#fff;--line:#dde3dc;--amber:#f0a81c;--amber2:#ffc857;--teal:#1b6b66;--teal2:#2aa198;--mute:#5d6f6c;--bad:#b3392f;--r:14px;--sh:0 1px 2px #0f2a2a0d,0 8px 24px #0f2a2a0f;--ease:cubic-bezier(.2,.8,.2,1)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,sans-serif}
-header{background:var(--ink);color:#fff;padding:14px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-header h1{margin:0;font-size:1.25rem;font-weight:800;flex:1}
-header h1 span{color:var(--amber)}
-.wrap{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:1fr 320px;gap:24px}
-@media(max-width:820px){.wrap{grid-template-columns:1fr}}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 "Bricolage Grotesque",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:20;background:#0f2a2ae6;backdrop-filter:blur(10px);color:#fff;padding:12px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #ffffff14;animation:down .6s var(--ease) both}
+.logo{display:flex;align-items:center;gap:10px;flex:1;margin:0;font-size:1.2rem;font-weight:800;letter-spacing:-.01em}
+.logo svg{width:30px;height:30px;filter:drop-shadow(0 0 8px #f0a81c88);animation:glow 3s ease-in-out infinite}
+.logo span{color:var(--amber)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--ink),var(--ink2));color:#fff;padding:64px 24px 72px}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff0a 1px,transparent 1px),linear-gradient(90deg,#ffffff0a 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at 30% 40%,#000,transparent 75%)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5}
+.b1{width:340px;height:340px;background:var(--amber);top:-120px;right:8%;animation:float 11s ease-in-out infinite}
+.b2{width:300px;height:300px;background:var(--teal2);bottom:-140px;left:-40px;animation:float 14s ease-in-out infinite reverse}
+.hero-in{position:relative;max-width:1000px;margin:0 auto}
+.hero h2{margin:0 0 12px;font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.08;font-weight:800;letter-spacing:-.02em;max-width:640px;animation:up .8s .1s var(--ease) both}
+.hero h2 em{font-style:normal;background:linear-gradient(90deg,var(--amber),var(--amber2),var(--amber));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+.hero p{margin:0 0 28px;max-width:520px;color:#cfe0dd;font-size:1.08rem;animation:up .8s .25s var(--ease) both}
+.stats{display:flex;gap:14px;flex-wrap:wrap;animation:up .8s .4s var(--ease) both}
+.stat{background:#ffffff12;border:1px solid #ffffff1f;border-radius:var(--r);padding:12px 20px;min-width:110px;backdrop-filter:blur(6px);transition:transform .25s var(--ease),background .25s}
+.stat:hover{transform:translateY(-3px);background:#ffffff1c}
+.stat b{display:block;font-size:1.9rem;line-height:1.1;font-weight:800;color:var(--amber2)}
+.stat small{color:#bcd2ce;font-size:.82rem}
+.wrap{max-width:1040px;margin:-28px auto 0;padding:0 20px 50px;display:grid;grid-template-columns:1fr 330px;gap:26px;position:relative}
+@media(max-width:840px){.wrap{grid-template-columns:1fr}}
 button,select,input,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px}
-button.pri{background:var(--amber);border-color:var(--amber);font-weight:600;color:var(--ink)}
-header button{background:transparent;color:#fff;border-color:#ffffff55}
-header button.pri{background:var(--amber);color:var(--ink)}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--teal);outline-offset:1px}
-button:disabled{opacity:.45;cursor:not-allowed}
-input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;margin:4px 0 12px}
+button{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 14px;transition:transform .15s var(--ease),box-shadow .2s,background .2s,border-color .2s}
+button:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 12px #0f2a2a1a;border-color:#c4cdc3}
+button:active:not(:disabled){transform:translateY(0) scale(.97)}
+button.pri{background:linear-gradient(135deg,var(--amber),var(--amber2));border-color:transparent;font-weight:700;color:var(--ink)}
+header button{background:transparent;color:#fff;border-color:#ffffff40}
+header button:hover:not(:disabled){background:#ffffff14;border-color:#ffffff80;box-shadow:none}
+header button.pri{background:linear-gradient(135deg,var(--amber),var(--amber2));color:var(--ink)}
+:focus-visible{outline:3px solid var(--teal2);outline-offset:2px}
+button:disabled{opacity:.4;cursor:not-allowed}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;margin:4px 0 12px;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--teal2);box-shadow:0 0 0 4px #2aa19826;outline:none}
 label{font-weight:600;font-size:.9rem}
-.bar{display:flex;gap:10px;margin-bottom:14px}.bar select{margin:0}
-.idea{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px;display:flex;gap:14px}
-.vote{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:44px}
-.vote button{padding:2px 10px;line-height:1.2}.vote button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
-.score{font-weight:800;font-size:1.3rem}
-.idea h3{margin:0 0 4px;font-size:1.1rem}
+.bar{display:flex;gap:10px;margin-bottom:16px;padding:10px;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);animation:up .7s .5s var(--ease) both}
+.bar select{margin:0}
+.idea{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px;display:flex;gap:16px;box-shadow:var(--sh);transition:transform .3s var(--ease),box-shadow .3s;overflow:hidden}
+.idea::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--amber),var(--teal2));transform:scaleY(0);transform-origin:top;transition:transform .35s var(--ease)}
+.idea:hover{transform:translateY(-3px);box-shadow:0 14px 34px #0f2a2a1c}
+.idea:hover::before{transform:scaleY(1)}
+.enter .idea{animation:rise .6s var(--ease) both;animation-delay:calc(var(--i)*70ms)}
+.vote{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:46px}
+.vote button{padding:3px 11px;line-height:1.25;border-radius:8px}
+.vote button.on{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 4px 12px #1b6b6655}
+.score{font-weight:800;font-size:1.4rem;line-height:1.2}
+.score.pop{animation:pop .45s var(--ease)}
+.idea h3{margin:0 0 6px;font-size:1.15rem;letter-spacing:-.01em}
+.idea p{margin:8px 0 12px}
 .meta{color:var(--mute);font-size:.85rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.tag{background:#e6efec;color:var(--teal);border-radius:20px;padding:1px 10px;font-size:.8rem;font-weight:600}
-.st{border-radius:20px;padding:1px 10px;font-size:.8rem;font-weight:600;background:#eee}
+.tag{background:#e3f0ed;color:var(--teal);border-radius:20px;padding:2px 11px;font-size:.78rem;font-weight:700}
+.st{border-radius:20px;padding:2px 11px;font-size:.78rem;font-weight:700;background:#eceeea;color:#59635f}
 .st.approved{background:#d9f0dc;color:#1d6b2f}.st.rejected{background:#f6dcd8;color:var(--bad)}.st.under{background:#fdecc4;color:#7a5200}
-.note{font-size:.8rem;color:var(--mute);margin-top:2px}
-.side{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;align-self:start}
-.side h2{margin:0 0 10px;font-size:1.05rem}
-.cm{border-left:3px solid var(--line);padding-left:12px;margin:10px 0}.cm .meta{margin-bottom:2px}
+.note{font-size:.8rem;color:var(--mute);margin:2px 0 8px}
+.side{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;align-self:start;box-shadow:var(--sh);animation:up .7s .35s var(--ease) both}
+.side h2{margin:0 0 12px;font-size:1.1rem}
+aside{position:sticky;top:76px;align-self:start}
+.cm{border-left:3px solid var(--line);padding-left:12px;margin:10px 0;animation:fade .4s var(--ease) both}.cm .meta{margin-bottom:2px}
 .err{color:var(--bad);font-size:.9rem;min-height:1.2em}
-dialog{border:none;border-radius:var(--r);padding:22px;width:min(380px,92vw)}
-dialog::backdrop{background:#0008}
-.empty{padding:30px;text-align:center;color:var(--mute);background:var(--card);border:1px dashed var(--line);border-radius:var(--r)}
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;display:none}
+dialog{border:none;border-radius:18px;padding:26px;width:min(400px,92vw);box-shadow:0 30px 80px #0f2a2a55}
+dialog[open]{animation:dlg .35s var(--ease)}
+dialog::backdrop{background:#0f2a2a99;backdrop-filter:blur(3px);animation:fade .3s both}
+.empty{padding:36px;text-align:center;color:var(--mute);background:var(--card);border:2px dashed var(--line);border-radius:var(--r)}
+.sk{height:110px;border-radius:var(--r);margin-bottom:16px;background:linear-gradient(90deg,#e6ebe5 25%,#f4f7f3 50%,#e6ebe5 75%);background-size:200% 100%;animation:sk 1.3s linear infinite}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;display:none;box-shadow:0 10px 30px #0f2a2a55;z-index:50;animation:toast .4s var(--ease)}
 .urow{display:flex;gap:8px;align-items:center;justify-content:space-between;font-size:.9rem}.urow select{width:auto;margin:2px 0}
+footer{text-align:center;color:var(--mute);font-size:.82rem;padding:0 20px 28px}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes down{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(28px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.5);color:var(--teal2)}100%{transform:scale(1)}}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,24px)}}
+@keyframes glow{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes shine{to{background-position:200% 0}}
+@keyframes sk{to{background-position:-200% 0}}
+@keyframes dlg{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes toast{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Innovation <span>Idea</span> Tracker</h1>
+  <div class="logo"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3a9 9 0 0 0-5 16.5V23h10v-3.5A9 9 0 0 0 16 3Z" fill="#f0a81c"/><path d="M12 26h8M13 29h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg><span style="color:#fff">Innovation <span>Idea</span> Tracker</span></div>
   <div id="auth"></div>
 </header>
+<section class="hero"><div class="blob b1"></div><div class="blob b2"></div>
+  <div class="hero-in">
+    <h2>Where good ideas get <em>noticed</em></h2>
+    <p>Share your innovation ideas, vote on the ones that matter and shape them together through honest feedback.</p>
+    <div class="stats">
+      <div class="stat"><b id="s1">0</b><small>Ideas</small></div>
+      <div class="stat"><b id="s2">0</b><small>Votes cast</small></div>
+      <div class="stat"><b id="s3">0</b><small>Members</small></div>
+    </div>
+  </div>
+</section>
 <div class="wrap">
   <main>
     <div class="bar">
       <select id="fcat" aria-label="Filter by category"></select>
       <select id="fsort" aria-label="Sort ideas"><option value="votes">Most voted</option><option value="new">Newest</option></select>
     </div>
-    <div id="list"></div>
+    <div id="list"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
   </main>
   <aside>
     <div class="side" id="side"></div>
@@ -76,6 +131,7 @@ dialog::backdrop{background:#0008}
     <span><button type="button" id="dcancel">Cancel</button> <button class="pri" type="button" id="dgo"></button></span>
   </div>
 </dialog>
+<footer>Innovation Management · Mini Project 1</footer>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -100,6 +156,7 @@ async function api(path, body){
 }
 async function refresh(){ try { D = await api("state"); } catch(e){ toast("Could not reach the server: " + e.message); } renderAll(); }
 async function act(path, body){ try { await api(path, body); await refresh(); return true; } catch(e){ toast(e.message); return false; } }
+let animate = true, scoreMemo = {}, shown = {};
 let open = {}, replyTo = {}, mode = "login";
 const me = () => user(D.session);
 const isStaff = () => me() && ["reviewer","admin"].includes(me().role);
@@ -173,27 +230,29 @@ function renderFilter(){
   const cur = $("#fcat").value || "";
   $("#fcat").innerHTML = `<option value="">All categories</option>` + allCats().map(c=>`<option ${c===cur?"selected":""}>${esc(c)}</option>`).join("");
 }
-$("#fcat").onchange = renderList; $("#fsort").onchange = renderList;
+$("#fcat").onchange = $("#fsort").onchange = () => { animate = true; renderList(); };
 
 function renderList(){
   const f = $("#fcat").value, sort = $("#fsort").value;
   const l = D.ideas.filter(i => !f || i.category===f).map(i => ({...i, score:score(i.id)}));
   const byDate = (a,b) => new Date(b.created_at) - new Date(a.created_at);
   l.sort((a,b) => sort==="votes" ? b.score-a.score || byDate(a,b) : byDate(a,b));
+  $("#list").classList.toggle("enter", animate); animate = false;
   $("#list").innerHTML = l.length ? l.map(card).join("") : `<div class="empty">No ideas here yet. Be the first to share one.</div>`;
   l.forEach(i => { if (open[i.id]) drawComments(i.id); });
 }
-function card(i){
+function card(i, idx){
   const u = me(), mine = u && i.submitter_id === u.id;
+  const prev = scoreMemo[i.id], pop = prev !== undefined && prev !== i.score ? "pop" : ""; scoreMemo[i.id] = i.score;
   const my = u ? D.votes.find(v => v.idea_id===i.id && v.user_id===u.id)?.vote_type : 0;
   const dis = !u || mine ? "disabled" : "";
   const why = !u ? "Log in to vote" : mine ? "You can’t vote on your own idea" : "";
   const stc = i.status==="under review" ? "under" : i.status;
   const n = D.comments.filter(c => c.idea_id===i.id).length;
-  return `<article class="idea" data-id="${i.id}">
+  return `<article class="idea" data-id="${i.id}" style="--i:${Math.min(idx,8)}">
     <div class="vote" title="${why}">
       <button ${dis} class="${my===1?"on":""}" data-v="1" aria-label="Upvote">▲</button>
-      <span class="score">${i.score}</span>
+      <span class="score ${pop}">${i.score}</span>
       <button ${dis} class="${my===-1?"on":""}" data-v="-1" aria-label="Downvote">▼</button>
     </div>
     <div style="flex:1;min-width:0">
@@ -243,7 +302,15 @@ function drawComments(id){
     : `<div class="note">Log in to comment.</div>`}</div>`;
 }
 
-function renderAll(){ renderAuth(); renderSide(); renderAdmin(); renderFilter(); renderList(); }
+function countTo(id, n){
+  const el = $(id), from = shown[id] ?? 0; shown[id] = n;
+  if (from === n || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = n; return; }
+  const t0 = performance.now(), d = 900;
+  (function step(t){ const k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(from + (n - from) * e); if (k < 1) requestAnimationFrame(step); })(t0);
+}
+function renderHero(){ countTo("#s1", D.ideas.length); countTo("#s2", D.votes.length); countTo("#s3", D.users.length); }
+function renderAll(){ renderAuth(); renderSide(); renderAdmin(); renderFilter(); renderList(); renderHero(); }
 refresh();
 </script>
 </body>
